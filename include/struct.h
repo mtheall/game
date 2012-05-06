@@ -2,7 +2,13 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-#include <utility>
+typedef enum {
+  DIR_NONE = 0,
+  DIR_RIGHT,
+  DIR_DOWN,
+  DIR_LEFT,
+  DIR_UP,
+} direction_t;
 
 typedef struct {
   int x;
