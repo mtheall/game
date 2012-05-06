@@ -18,8 +18,9 @@
 #include <stdio.h>
 #include <_ansi.h>
 
-#include "Structs.h"
-#include "Classes.h"
+#include "struct.h"
+#include "map.h"
+#include "npc.h"
 
 ///Gfx includes
 //Maps
@@ -31,32 +32,32 @@ void TestZone() {
 	int loop;
 	
 	///Objects==================================///
-	MapClass 	*Map = 		new MapClass(3, 0, 1, layer1Pal, layer1Tiles, layer1Map, layer1TilesLen);
-	PlayerClass *Player = 	new PlayerClass(ghostlyTiles);
-	NPCClass 	*NPCTest =	new NPCClass(ghostlyTiles);
+	Map 	*map = 		new Map(3, 0, 1, layer1Pal, layer1Tiles, layer1Map, layer1TilesLen);
+	Player *player = 	new Player(ghostlyTiles);
+	NPC 	*NPCTest =	new NPC(ghostlyTiles);
 	///========================================///
 
-	Player->oamSetEntity(0, 15*8, 10*8, false);
+	player->oamSetEntity(0, 15*8, 10*8, false);
 	NPCTest->oamSetEntity(1, 0, 0, false);
 	
 	///MAIN LOOP==============================================================================
 	while(1) {
 
 	swiWaitForVBlank();
-	Map->BufferToMem();
+	map->BufferToMem();
 	bgUpdate();
 	oamUpdate(&oamMain);
 	
 	scanKeys();
-	if(keysHeld() & (KEY_RIGHT|KEY_DOWN|KEY_LEFT|KEY_UP) || Player->AnimLoop != 0) {
-		Player->AcceptUserInput(Map->id); 	
+	if(keysHeld() & (KEY_RIGHT|KEY_DOWN|KEY_LEFT|KEY_UP) || player->AnimLoop != 0) {
+		player->AcceptUserInput(map->id); 	
 	} 
-	if(Player->AnimLoop == 1){
-		Map->Update(Player, layer1Map);
+	if(player->AnimLoop == 1){
+		map->Update(player, layer1Map);
 	}
-	for(loop=0;loop<NPCClass::NPCCount;loop++) {NPCClass::NPCs[loop]->Hold(Player);}///Holds NPCs in place
+	for(loop=0;loop<NPC::NPCCount;loop++) {NPC::NPCs[loop]->Hold(player);}///Holds NPCs in place
 	
-	if(Player->AnimLoop == 16) {Player->AUIReset();}
+	if(player->AnimLoop == 16) {player->AUIReset();}
 	
 	}///======================================================================================
 }

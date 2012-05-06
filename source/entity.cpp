@@ -1,17 +1,18 @@
-
 #include <nds.h>
+#include "entity.h"
 
-#include "Classes.h"
 
-EntityClass::EntityClass(const u8 *SpriteData) {
-	c_BGPixels.X=0;	c_BGPixels.Y=0;
-	c_BGTiles.X=0; 	c_BGTiles.Y=0;
+Entity::Entity(const u8 *SpriteData) {
+	c_BGPixels.x = 0;
+  c_BGPixels.y = 0;
+	c_BGTiles.x  = 0;
+  c_BGTiles.y  = 0;
 
 	pSpriteBase = oamAllocateGfx(&oamMain, SpriteSize_16x32, SpriteColorFormat_256Color);
 	memcpy(pSpriteBase, SpriteData, 256*2);
 }
 
-void EntityClass::oamSetEntity(int index, int X, int Y, bool Hide)
+void Entity::oamSetEntity(int index, int X, int Y, bool Hide)
 {
 	oamSet(&oamMain,
 			index, 
